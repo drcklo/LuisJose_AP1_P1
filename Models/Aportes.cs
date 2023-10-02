@@ -4,7 +4,6 @@ namespace LuisJose_AP1_P1.Models
 {
     public class Aportes
     {
-
         [Key]
         public int AportesId { get; set; }
 
@@ -21,4 +20,5 @@ namespace LuisJose_AP1_P1.Models
         public int Monto{ get; set; }
     }
 }
+
 
