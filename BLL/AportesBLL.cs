@@ -44,7 +44,12 @@ namespace LuisJose_AP1_P1.BLL
             _context.Entry(aportes).State = EntityState.Deleted;
             return _context.SaveChanges() > 0;
         }
+        public Aportes? Buscar(int aportesId)
+        {
+            return _context.Aportes.AsNoTracking().SingleOrDefault(c => c.AportesId == aportesId);
+        }
 
+       
 
 
     }
