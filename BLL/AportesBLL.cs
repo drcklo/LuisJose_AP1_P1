@@ -49,8 +49,12 @@ namespace LuisJose_AP1_P1.BLL
             return _context.Aportes.AsNoTracking().SingleOrDefault(c => c.AportesId == aportesId);
         }
 
-       
-
-
+        public List<Aportes> GetList(Expression<Func<Aportes, bool>> Criterio)
+        {
+            return _context.Aportes
+                            .Where(Criterio)
+                            .AsNoTracking()
+                            .ToList();
+        }
     }
 }
