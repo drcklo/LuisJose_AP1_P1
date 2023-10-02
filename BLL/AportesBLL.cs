@@ -18,6 +18,12 @@ namespace LuisJose_AP1_P1.BLL
         {
             return _context.Aportes.Any(a => a.AportesId == aportesId);
         }
-		
+        public bool Insertar(Aportes aportes)
+        {
+            _context.Aportes.Add(aportes);
+            return _context.SaveChanges() > 0;
+        }
+        
+
     }
 }
