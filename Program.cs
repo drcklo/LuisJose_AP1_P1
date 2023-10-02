@@ -1,3 +1,4 @@
+using LuisJose_AP1_P1.BLL;
 using LuisJose_AP1_P1.DAL;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -12,6 +13,8 @@ builder.Services.AddServerSideBlazor();
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 
 builder.Services.AddDbContext<Context>(op => op.UseSqlite(ConStr));
+
+builder.Services.AddScoped<AportesBLL>();
 
 builder.Services.AddScoped<NotificationService>();
 
