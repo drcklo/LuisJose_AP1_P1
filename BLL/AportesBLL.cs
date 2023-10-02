@@ -30,6 +30,13 @@ namespace LuisJose_AP1_P1.BLL
             _context.Entry(aportes).State = EntityState.Modified;
             return _context.SaveChanges() > 0;
         }
+        public bool Guardar(Aportes aportes)
+        {
+            if (!Existe(aportes.AportesId))
+                return this.Insertar(aportes);
+            else
+                return this.Modificar(aportes);
+        }
 
         
     }
