@@ -14,6 +14,10 @@ namespace LuisJose_AP1_P1.BLL
 		{
 			_context = context;
 		}
-        
+        public bool Existe(int aportesId)
+        {
+            return _context.Aportes.Any(a => a.AportesId == aportesId);
+        }
+		
     }
 }
