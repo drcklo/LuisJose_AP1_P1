@@ -5,7 +5,38 @@
 
 <h3>Consulta de Aportes</h3>
 
-@code {
+@code 
+{
+    public int Filtro { get; set; }
+    public Aportes aportes = new Aportes();
+    public List<Aportes> ListaAportes = new List<Aportes>();
 
+    public DateTime From { get; set; }
+    public DateTime Until { get; set; }
+    public int MontoFinal { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ListaAportes = aportesBLL.GetList(c => true);
+        From = DateTime.Now.AddMonths(-1);
+        Until = DateTime.Now;
+
+    }
+
+    public void Buscar()
+    {
+        if (Filtro == 0)
+            ListaAportes = aportesBLL.GetList(a => a.Fecha >= From.Date && a.Fecha <= Until);
+        else
+        if (Filtro == 1 && !string.IsNullOrEmpty(aportes.Persona))
+            ListaAportes = aportesBLL.GetList(a => a.Persona == aportes.Persona && a.Fecha >= From.Date && a.Fecha <= Until);
+        else
+            ListaAportes = aportesBLL.GetList(a => false);
+    }
+
+    public void Reiniciar()
+    {
+        ListaAportes = aportesBLL.GetList(a => true);
+    }
 }
 
