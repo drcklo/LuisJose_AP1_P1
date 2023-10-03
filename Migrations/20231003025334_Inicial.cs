@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace LuisJose_AP1_P1.Migrations
 {
     /// <inheritdoc />
-    public partial class Incial : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,8 @@ namespace LuisJose_AP1_P1.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Persona = table.Column<string>(type: "TEXT", nullable: false),
                     Observacion = table.Column<string>(type: "TEXT", nullable: false),
-                    Monto = table.Column<int>(type: "INTEGER", nullable: false)
+                    Monto = table.Column<int>(type: "INTEGER", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
