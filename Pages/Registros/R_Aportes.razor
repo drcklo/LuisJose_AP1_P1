@@ -5,20 +5,47 @@
 
 <h3>Registro de Aportes</h3>
 
-<EditForm Model="Aportes">
-
+<EditForm Model="Aportes" OnInvalidSubmit="Guardar">
+		<DataAnnotationsValidator />
+		
     <label>AporteId</label>
+
     <div class="input-group">
-        <input class="input"/>
+        <InputNumber @bind-Value="Aportes.AportesId" class="input"></InputNumber>
+        <button type="button" class=" input btn oi oi-magnifying-glass btn-outline-dark" @onclick="Buscar"></button>
     </div>
+
     <label>Fecha</label>
+
+    <div class="input-group">
+        <InputDate @bind-Value="Aportes.Fecha" @oninput="@(e => campoVacio = string.IsNullOrEmpty(e.Value.ToString()))" class="input"></InputDate>
+    </div>   
 
     <label>Persona</label>
 
-    <label>Observacion</label>
+    <div class=" input-group-lg">
+        <InputText @bind-Value="Aportes.Persona" @oninput="@(e => campoVacio = string.IsNullOrEmpty(e.Value.ToString()))" class="input"></InputText>
+    </div>
+
+    <label>Observaci&oacute;n</label>
+
+    <div class=" input-group">
+        <InputText @bind-Value="Aportes.Observacion" @oninput="@(e => campoVacio = string.IsNullOrEmpty(e.Value.ToString()))" class="input"></InputText>
+    </div>
 
     <label>Monto</label>
+    <div class=" input-group">
+        <InputNumber @bind-Value="Aportes.Monto" @oninput="@(e => campoVacio = string.IsNullOrEmpty(e.Value.ToString()))" class="input"></InputNumber>
+    </div>
 
+    <br />
+    <br />
+    <br />
+    <br />
+    <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo <i class="oi oi-file" /></button>
+    <button class="btn btn-success">Guardar <i class="oi oi-document" /></button>
+    <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="oi oi-trash" /></button>
+    <ValidationSummary />
 </EditForm>
 
 
@@ -27,6 +54,8 @@
 
     [Parameter]
     public int AportesId { get; set; }
+
+    public bool campoVacio = false;
 
     protected override void OnInitialized()
     {
@@ -69,20 +98,70 @@
     {
         this.Aportes = new Aportes();
     }
-
-    public void Validar()
+    public bool Validar()
     {
-        
+        if (this.Aportes.Persona == null)
+            return true;
+        else
+            return false;
     }
 
     public void Guardar()
     {
-
+        if (Validar())
+        {
+            var notificacion = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Error",
+                    Detail = "No se pudo guardar el aporte correctamente",
+                    Duration = 4_000
+                };
+            notificationService.Notify(notificacion);
+            return;
+        }
+        var aporteGuardado = aportesBLL.Guardar(this.Aportes);
+        if (aporteGuardado)
+        {
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Exitoso",
+                    Detail = "El cliente fue guardado correctamente",
+                    Duration = 4_000
+                };
+            notificationService.Notify(mensaje);
+            this.Nuevo();
+        }
     }
 
     public void Eliminar()
     {
-  
+        var aporteEliminado = aportesBLL.Eliminar(this.Aportes);
+        if (aportesBLL.Existe(Aportes.AportesId) && aporteEliminado)
+        {
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Confirmación",
+                    Detail = "Cliente Eliminado Correctamente",
+                    Duration = 4_000
+                };
+            notificationService.Notify(mensaje);
+            this.Nuevo();
+        }
+        else
+        {
+            var notificacion = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Error",
+                    Detail = "El Cliente no Existe",
+                    Duration = 4_000
+                };
+            notificationService.Notify(notificacion);
+            return;
+        }
     }
 
 }

@@ -7,17 +7,19 @@ namespace LuisJose_AP1_P1.Models
         [Key]
         public int AportesId { get; set; }
 
-        [RegularExpression(@"^a-zA-z$")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El campo Persona no puede contener numeros")]
         [Required(ErrorMessage = "Este campo es requerido para hacer su aporte")]
-        public string? Persona{ get; set; }
+        public string? Persona { get; set; }
 
-        [RegularExpression(@"^a-zA-z$")]
         [Required(ErrorMessage = "Este campo es requerido para hacer su aporte")]
         public string? Observacion { get; set; }
 
-        [RegularExpression(@"/d")]
+        [RegularExpression(@"[\d]",ErrorMessage = "El campo Monto solo puede tener numeros")]
         [Required(ErrorMessage = "Este campo es requerido para hacer su aporte")]
-        public int Monto{ get; set; }
+        public int Monto { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido para hacer su aporte")]
+        public DateTime Fecha {get;set;}
     }
 }
 
