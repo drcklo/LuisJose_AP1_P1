@@ -5,6 +5,63 @@
 
 <h3>Consulta de Aportes</h3>
 
+<label>Desde</label>
+<InputDate @bind-Value="From" class="input"></InputDate>
+
+<label>Hasta</label>
+<InputDate @bind-Value="Until" class="input"></InputDate>
+
+<label>Filtrar por:</label>
+<InputSelect @bind-Value="Filtro">
+    <option value="1">AporteId</option>
+    <option value="2">Nombr de persona</option>
+</InputSelect>
+<button class="oi oi-magnifying-glass" @onclick="Buscar"></button>
+<div>
+    @switch (Filtro)
+    {
+        case 1:
+            <InputNumber @bind-Value="aportes.AportesId" ></InputNumber>
+            break;
+        case 2:
+            <InputText @bind-Value="aportes.Persona" ></InputText>
+            break;
+    }
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id del aporte</th>
+                <th>Persona</th>
+                <th>Fecha</th>
+                <th>Observación</th>
+                <th>Monto</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var aportes in ListaAportes)
+            {
+                <tr>
+                    <td>@aportes.AportesId</td>
+                    <td>@aportes.Persona</td>
+                    <td>@aportes.Fecha.ToString("MM/dd/yyyy")</td>
+                    <td>@aportes.Observacion</td>
+                    <td>@aportes.Monto</td>
+                    <td><a href="RegistroAporte/@aportes.AportesId">Ver</a></td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total: @MontoFinal</td>
+                <td></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
 @code 
 {
     public int Filtro { get; set; }
