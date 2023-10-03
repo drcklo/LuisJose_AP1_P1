@@ -1,5 +1,5 @@
-﻿<h3>R_Aportes</h3>
-
-@code {
-
-}
+﻿@page "/registrodeaportes"@inject AportesBLL aportesBLL@inject NotificationService notificationService<h3>Registro de Aportes</h3><EditForm Model="Aportes">    <label>AporteId</label>        <label>Fecha</label>    <label>Persona</label>    <label>Observacion</label>    <label>Monto</label></EditForm>@code{
+    public Aportes? Aportes { get; set; } = new Aportes();    [Parameter]    public int AportesId { get; set; }    protected override void OnInitialized()    {        if(AportesId > 0)        {            Aportes.AportesId = AportesId;            Buscar();        }    }    public void Buscar()    {        var aporteEncontrado = aportesBLL.Buscar(Aportes.AportesId);        if (aporteEncontrado != null)        {            this.Aportes = aporteEncontrado;        }        else        {            var notificacion = new NotificationMessage                {                    Severity = NotificationSeverity.Error,                    Summary = "No encontrado",                    Detail = "No existe ningun aporte con estos datos",                    Duration = 4_000                };            notificationService.Notify(notificacion);            this.Nuevo();        }    }    public void Nuevo()    {        this.Aportes = new Aportes();    }    public void Validar()
+    {
+        
+    }    public void Guardar()    {    }    public void Eliminar()    {      }}
