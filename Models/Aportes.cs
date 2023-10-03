@@ -14,7 +14,7 @@ namespace LuisJose_AP1_P1.Models
         [Required(ErrorMessage = "Este campo es requerido para hacer su aporte")]
         public string? Observacion { get; set; }
 
-        [RegularExpression(@"[\d]",ErrorMessage = "El campo Monto solo puede tener numeros")]
+        [RegularExpression(@"[\d]+",ErrorMessage = "El campo Monto solo puede tener numeros")]
         [Required(ErrorMessage = "Este campo es requerido para hacer su aporte")]
         public int Monto { get; set; }
 
